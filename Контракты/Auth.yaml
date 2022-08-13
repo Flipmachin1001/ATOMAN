@@ -1,0 +1,96 @@
+openapi: 3.0.1
+info:
+  title: Авторизация
+  description: Авторизация - ATOMAN
+  contact:
+    name: Alexander Mikhalev
+    url: https://t.me/flipmachin1001
+    email: flipmachin1001@gmail.com
+  version: v1
+paths:
+  /Auth/Login:
+    post:
+      tags:
+        - Auth
+      summary: Авториция
+      requestBody:
+        description: JWT токен авторизации
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/LoginModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/LoginModel'
+      responses:
+        '200':
+          description: Success
+  /Auth/NewLogin:
+    post:
+      tags:
+        - Auth
+      summary: Создать нового пользователя
+      requestBody:
+        description: Логин/пароль
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/LoginModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/LoginModel'
+      responses:
+        '200':
+          description: Success
+  /Auth/NewLoginFrom1C:
+    post:
+      tags:
+        - Auth
+      summary: Импорт пользователя из 1С
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Import1CLoginModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/Import1CLoginModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/Import1CLoginModel'
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    Import1CLoginModel:
+      required:
+        - barCode
+        - userId
+      type: object
+      properties:
+        userId:
+          type: string
+          format: uuid
+        barCode:
+          type: string
+      additionalProperties: false
+    LoginModel:
+      required:
+        - password
+        - userName
+      type: object
+      properties:
+        userName:
+          type: string
+        password:
+          type: string
+      additionalProperties: false
+      description: Модель входа в систему
