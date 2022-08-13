@@ -1,0 +1,524 @@
+openapi: 3.0.1
+info:
+  title: Хронология авто
+  description: Хронология авто - ATOMAN
+  contact:
+    name: Alexander Mikhalev
+    url: https://t.me/flipmachin1001
+    email: flipmachin1001@gmail.com
+  version: v1
+paths:
+  /Car:
+    post:
+      tags:
+        - Car
+      summary: Добавить авто
+      requestBody:
+        description: Информация об автомобиле
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarInfo'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CarInfo'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CarInfo'
+      responses:
+        '200':
+          description: Success
+  /Car/{id}:
+    put:
+      tags:
+        - Car
+      summary: Обновить информацию об авто
+      parameters:
+        - name: id
+          in: path
+          description: Идентификатор авто
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Информация об автомобиле
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarInfo'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CarInfo'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CarInfo'
+      responses:
+        '200':
+          description: Success
+    get:
+      tags:
+        - Car
+      summary: Получить информация авто по его Id
+      parameters:
+        - name: id
+          in: path
+          description: Идентификатор авто
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CarInfo'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarInfo'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CarInfo'
+  /Car/ByBarCode/{carBarCode}:
+    get:
+      tags:
+        - Car
+      summary: Получить информацию об авто по штрих-коду
+      parameters:
+        - name: carBarCode
+          in: path
+          description: Штрих-код авто
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CarInfo'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarInfo'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CarInfo'
+  /Car/All:
+    get:
+      tags:
+        - Car
+      summary: Получить список все автомобилей
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarInfo'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarInfo'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarInfo'
+  /CarInspect:
+    post:
+      tags:
+        - CarInspect
+      summary: Опубликовать результаты осмотра автомобиля без его передачи
+      requestBody:
+        description: Модель осмотра авто
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarInspectionModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CarInspectionModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CarInspectionModel'
+      responses:
+        '200':
+          description: Success
+  /CarInspect/{id}:
+    get:
+      tags:
+        - CarInspect
+      summary: Получить результаты осмотра авто по Id
+      parameters:
+        - name: id
+          in: path
+          description: Идентификатор акта осмотра
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CarInspectionModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarInspectionModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CarInspectionModel'
+  /CarInspect/CarId/Last/{carId}:
+    get:
+      tags:
+        - CarInspect
+      summary: Получить последний акт осмотра по авто
+      parameters:
+        - name: carId
+          in: path
+          description: Идентификатор авто
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CarInspectionModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarInspectionModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CarInspectionModel'
+  /CarInspect/CarId/All/{carId}:
+    get:
+      tags:
+        - CarInspect
+      summary: Получить все акты осмотра авто
+      parameters:
+        - name: carId
+          in: path
+          description: Идентификатор авто
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarInspectionModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarInspectionModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarInspectionModel'
+  /CarSharing:
+    post:
+      tags:
+        - CarSharing
+      summary: Сохранить передачу авто
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarShareEventInfo'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CarShareEventInfo'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CarShareEventInfo'
+      responses:
+        '200':
+          description: Success
+  /CarSharing/Id/{id}:
+    get:
+      tags:
+        - CarSharing
+      summary: Получить информацию о передачи авто по Id
+      parameters:
+        - name: id
+          in: path
+          description: Идентификатор акта
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CarShareEventInfo'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarShareEventInfo'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CarShareEventInfo'
+  /CarSharing/CarId/Last/{carId}:
+    get:
+      tags:
+        - CarSharing
+      summary: Получить последний акт передачи по идентификатору авто
+      parameters:
+        - name: carId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CarShareEventInfo'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarShareEventInfo'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CarShareEventInfo'
+  /CarSharing/CarId/All/{carId}:
+    get:
+      tags:
+        - CarSharing
+      summary: Получить все акты передачи по заданному автомобилю
+      parameters:
+        - name: carId
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarShareEventInfo'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarShareEventInfo'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CarShareEventInfo'
+components:
+  schemas:
+    CarIncident:
+      type: object
+      properties:
+        incidentId:
+          type: string
+          description: Идентификатор инцидента
+          format: uuid
+        location:
+          type: string
+          description: Местоположение на схеме авто
+          nullable: true
+        incidentDocs:
+          type: array
+          items:
+            $ref: '#/components/schemas/IncidentDoc'
+          description: Документы (фотографии) приложенные к инциденту
+          nullable: true
+        incidentComment:
+          type: string
+          description: Комментарий к инциденту и документам
+          nullable: true
+      additionalProperties: false
+      description: Инцидент
+    CarIncidents:
+      type: object
+      properties:
+        carIncidentsDateTime:
+          type: string
+          description: Дата и время фиксации инцидентов
+          format: date-time
+        carIncidentUserId:
+          type: string
+          description: Пользователь, который зафиксировал инциденты
+          format: uuid
+        incidents:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarIncident'
+          description: Инциденты
+          nullable: true
+      additionalProperties: false
+      description: Инциденты авто
+    CarInfo:
+      type: object
+      properties:
+        carId:
+          type: string
+          description: Идентификатор автомобиля в 1С
+          format: uuid
+        carModel:
+          type: string
+          description: Модель автомобиля
+          nullable: true
+        carNumber:
+          type: string
+          description: Гос. номер автомобиля
+          nullable: true
+        carMileage:
+          type: integer
+          description: Показания Одометра
+          format: int32
+        carBarCode:
+          type: string
+          description: Штрих-код авто
+          nullable: true
+        version:
+          type: integer
+          description: Версия сущности
+          format: int32
+      additionalProperties: false
+      description: Информация об автомобиле из 1С
+    CarInspectionModel:
+      type: object
+      properties:
+        carInspectionId:
+          type: string
+          description: Идентификатор акт осмотра авто
+          format: uuid
+        inspectionItems:
+          type: array
+          items:
+            $ref: '#/components/schemas/InspectionItem'
+          description: Чек лист с параметрами осмотра, шины, аптечка, огнетушитель и т.п.
+          nullable: true
+        inspectionUserId:
+          type: string
+          description: Идентификатор пользователя, который проводил осмотр
+          format: uuid
+        inspectionDate:
+          type: string
+          description: Дата проведения осмотра
+          format: date-time
+        inspectionResult:
+          type: string
+          description: Результат осмототра - заключение
+          nullable: true
+        carIncidents:
+          $ref: '#/components/schemas/CarIncidents'
+      additionalProperties: false
+      description: Модель осмотра автомобиля
+    CarShareEvent:
+      type: object
+      properties:
+        carId:
+          type: string
+          description: Идентификатор автомобиля в 1С
+          format: uuid
+        userFrom:
+          type: string
+          description: Идентификатор пользователя отдающего авто
+          format: uuid
+        userTo:
+          type: string
+          description: Идентификатор пользователя принимающего авто
+          format: uuid
+        eventDate:
+          type: string
+          description: Дата события передачи авто
+          format: date-time
+        carShareEventId:
+          type: string
+          description: Ссылка на идентификатор акта передачи авто
+          format: uuid
+      additionalProperties: false
+      description: Событие передачи автомобиля от пользователя А к пользователю Б
+    CarShareEventInfo:
+      type: object
+      properties:
+        carShareEvent:
+          $ref: '#/components/schemas/CarShareEvent'
+        carInspection:
+          $ref: '#/components/schemas/CarInspectionModel'
+      additionalProperties: false
+      description: Факт передачи авто
+    IncidentDoc:
+      type: object
+      properties:
+        docId:
+          type: string
+          description: Идентификатор документа
+          format: uuid
+        docFileExt:
+          type: string
+          description: Расширение файла
+          nullable: true
+        docHash:
+          type: string
+          description: Хэш документа
+          nullable: true
+      additionalProperties: false
+      description: Документ для инцидента
+    InspectionItem:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Порядковый номер в списке
+          format: int32
+        description:
+          type: string
+          description: Описание характеристики
+          nullable: true
+        valueType:
+          type: string
+          description: 'Тип параметра: string, int, double и т.п.'
+          nullable: true
+        expectValue:
+          description: Требуемое значение параметра
+          nullable: true
+        factValue:
+          description: Фактическое значение параметра
+          nullable: true
+      additionalProperties: false
+      description: Элемент чек-листа осмотра
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      description: "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\""
+      name: Authorization
+      in: header
+security:
+  - Bearer: []
