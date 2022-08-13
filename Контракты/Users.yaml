@@ -1,0 +1,131 @@
+openapi: 3.0.1
+info:
+  title: Пользователи
+  description: Пользователи - ATOMAN
+  contact:
+    name: Alexander Mikhalev
+    url: https://t.me/flipmachin1001
+    email: flipmachin1001@gmail.com
+  version: v1
+paths:
+  /Users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Получение информации о пользователе по его ID
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+    put:
+      tags:
+        - Users
+      summary: Обновление информации о пользователе по его ID
+      parameters:
+        - name: id
+          in: path
+          description: ''
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+  /Users:
+    post:
+      tags:
+        - Users
+      summary: Добавление нового пользователя
+      requestBody:
+        description: ''
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserInfo'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UserInfo'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UserInfo'
+      responses:
+        '200':
+          description: Success
+    delete:
+      tags:
+        - Users
+      summary: Удаление пользователя
+      parameters:
+        - name: id
+          in: query
+          description: ''
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+components:
+  schemas:
+    UserInfo:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Идентификатор пользователя в 1С
+          format: uuid
+        userFirstName:
+          type: string
+          description: Имя пользователя
+          nullable: true
+        userLastName:
+          type: string
+          description: Фамилия пользователя
+          nullable: true
+        userBarCode:
+          type: string
+          description: Штрих-код пользователя
+          nullable: true
+        userRoles:
+          type: array
+          items:
+            $ref: '#/components/schemas/UserRole'
+          description: Роли пользователя
+          nullable: true
+        version:
+          type: integer
+          description: Номер версии сущности
+          format: int32
+      additionalProperties: false
+      description: Информация о пользователе АТО из 1С
+    UserRole:
+      type: object
+      properties:
+        roleId:
+          type: integer
+          description: Идентификатор роли
+          format: int32
+        roleDescription:
+          type: string
+          description: Описание роли
+          nullable: true
+      additionalProperties: false
+      description: Роль пользователя
