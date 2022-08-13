@@ -1,0 +1,259 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Шлюз 1С",
+    "description": "Шлюз 1С - ATOMAN",
+    "contact": {
+      "name": "Alexander Mikhalev",
+      "url": "https://t.me/flipmachin1001",
+      "email": "flipmachin1001@gmail.com"
+    },
+    "version": "v1"
+  },
+  "paths": {
+    "/CarFrom1C": {
+      "get": {
+        "tags": [
+          "CarFrom1C"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarInfo"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarInfo"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/CarSharing": {
+      "post": {
+        "tags": [
+          "CarSharing"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarShareEvent"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarShareEvent"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarShareEvent"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/UsersFrom1C": {
+      "get": {
+        "tags": [
+          "UsersFrom1C"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserInfo"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserInfo"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CarInfo": {
+        "type": "object",
+        "properties": {
+          "carId": {
+            "type": "string",
+            "description": "Идентификатор автомобиля в 1С",
+            "format": "uuid"
+          },
+          "carModel": {
+            "type": "string",
+            "description": "Модель автомобиля",
+            "nullable": true
+          },
+          "carNumber": {
+            "type": "string",
+            "description": "Гос. номер автомобиля",
+            "nullable": true
+          },
+          "carMileage": {
+            "type": "integer",
+            "description": "Показания Одометра",
+            "format": "int32"
+          },
+          "carBarCode": {
+            "type": "string",
+            "description": "Штрих-код авто",
+            "nullable": true
+          },
+          "version": {
+            "type": "integer",
+            "description": "Версия сущности",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Информация об автомобиле из 1С"
+      },
+      "CarShareEvent": {
+        "type": "object",
+        "properties": {
+          "carId": {
+            "type": "string",
+            "description": "Идентификатор автомобиля в 1С",
+            "format": "uuid"
+          },
+          "userFrom": {
+            "type": "string",
+            "description": "Идентификатор пользователя отдающего авто",
+            "format": "uuid"
+          },
+          "userTo": {
+            "type": "string",
+            "description": "Идентификатор пользователя принимающего авто",
+            "format": "uuid"
+          },
+          "eventDate": {
+            "type": "string",
+            "description": "Дата события передачи авто",
+            "format": "date-time"
+          },
+          "carShareEventId": {
+            "type": "string",
+            "description": "Ссылка на идентификатор акта передачи авто",
+            "format": "uuid"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Событие передачи автомобиля от пользователя А к пользователю Б"
+      },
+      "UserInfo": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "Идентификатор пользователя в 1С",
+            "format": "uuid"
+          },
+          "userFirstName": {
+            "type": "string",
+            "description": "Имя пользователя",
+            "nullable": true
+          },
+          "userLastName": {
+            "type": "string",
+            "description": "Фамилия пользователя",
+            "nullable": true
+          },
+          "userBarCode": {
+            "type": "string",
+            "description": "Штрих-код пользователя",
+            "nullable": true
+          },
+          "userRoles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserRole"
+            },
+            "description": "Роли пользователя",
+            "nullable": true
+          },
+          "version": {
+            "type": "integer",
+            "description": "Номер версии сущности",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false,
+        "description": "Информация о пользователе АТО из 1С"
+      },
+      "UserRole": {
+        "type": "object",
+        "properties": {
+          "roleId": {
+            "type": "integer",
+            "description": "Идентификатор роли",
+            "format": "int32"
+          },
+          "roleDescription": {
+            "type": "string",
+            "description": "Описание роли",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false,
+        "description": "Роль пользователя"
+      }
+    }
+  }
+}
