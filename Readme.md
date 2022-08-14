@@ -49,7 +49,11 @@
 Для удобства просмотра можно использовать [Swagger Editor](https://editor.swagger.io/). 
 Для просмотра необходимо в редактор вставить содержимое yaml файла.
 1.[Шлюз 1С](https://github.com/Flipmachin1001/ATOMAN/blob/df67877bb38a561232939f3a3d486c2d765071d3/%D0%9A%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82%D1%8B/Gateway_1C.yaml)
+
 2.[Авторизация](https://github.com/Flipmachin1001/ATOMAN/blob/df67877bb38a561232939f3a3d486c2d765071d3/%D0%9A%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82%D1%8B/Auth.yaml)
+
 3.[Пользователи](https://github.com/Flipmachin1001/ATOMAN/blob/df67877bb38a561232939f3a3d486c2d765071d3/%D0%9A%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82%D1%8B/Users.yaml)
+
 4.[Хранилище файлов](https://github.com/Flipmachin1001/ATOMAN/blob/df67877bb38a561232939f3a3d486c2d765071d3/%D0%9A%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82%D1%8B/Storage.yaml)
+
 5.[Хронология автомобилей](https://github.com/Flipmachin1001/ATOMAN/blob/df67877bb38a561232939f3a3d486c2d765071d3/%D0%9A%D0%BE%D0%BD%D1%82%D1%80%D0%B0%D0%BA%D1%82%D1%8B/CarSharing.yaml)
