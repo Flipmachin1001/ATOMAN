@@ -1,0 +1,205 @@
+openapi: 3.0.1
+info:
+  title: Хранилище документов
+  description: Хранилище - ATOMAN
+  contact:
+    name: Alexander Mikhalev
+    url: https://t.me/flipmachin1001
+    email: flipmachin1001@gmail.com
+  version: v1
+paths:
+  /Storage:
+    post:
+      tags:
+        - Storage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FileContentModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/FileContentModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/FileContentModel'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ContentUploadResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ContentUploadResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ContentUploadResult'
+  /Storage/Package:
+    post:
+      tags:
+        - Storage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FileContentModel'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FileContentModel'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/FileContentModel'
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContentUploadResult'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContentUploadResult'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContentUploadResult'
+  /Storage/{id}:
+    get:
+      tags:
+        - Storage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/FileContentModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileContentModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/FileContentModel'
+  /Storage/DocId/{id}:
+    get:
+      tags:
+        - Storage
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/FileContentModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/FileContentModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/FileContentModel'
+components:
+  schemas:
+    ContentUploadResult:
+      type: object
+      properties:
+        fileId:
+          type: string
+          description: Идентификатор загружаемого файла
+          format: uuid
+        uploadStatus:
+          $ref: '#/components/schemas/UploadStatus'
+        description:
+          type: string
+          description: Описнаие статуста если Ок, пусто, если ошибка - описание ошибки
+          nullable: true
+      additionalProperties: false
+      description: Результат загрузки файла
+    FileContentModel:
+      type: object
+      properties:
+        fileId:
+          type: string
+          description: Идентификатор файла
+          format: uuid
+        dateCreted:
+          type: string
+          description: Дата создания файла
+          format: date-time
+        fileExt:
+          type: string
+          description: 'Расширение файла: jpeg,png,gif,bmp,pdf и т.п.'
+          nullable: true
+        docRefId:
+          type: string
+          description: Ссылка на номер документа, к котрому прикреплен файл
+          format: uuid
+        cretedByUser:
+          type: string
+          description: Идентификатор пользоватлея, который создал файл
+          format: uuid
+        content:
+          type: string
+          description: Сами данные в Base64
+          format: byte
+          nullable: true
+        hash:
+          type: string
+          description: Хэш сумма файла
+          nullable: true
+      additionalProperties: false
+      description: Данные привязанные к документу
+    UploadStatus:
+      enum:
+        - Success
+        - Pending
+        - Fail
+      type: integer
+      description: Статусы загрузки файла
+      format: int32
+  securitySchemes:
+    Bearer:
+      type: apiKey
+      description: "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\""
+      name: Authorization
+      in: header
+security:
+  - Bearer: []
